@@ -1,0 +1,41 @@
+header{
+    background-color: #2980b9;
+}
+
+h1{
+    text-align: center;
+    font-size: 5em;
+    color: white;
+}
+
+h2{
+    color: #2980b9;
+    text-decoration: underline;
+    margin-left: 5%;
+    font-size: 2em;
+}
+
+p{
+    margin-left: 10%;
+    font-size: 1.2em;
+}
+
+a:link{
+    color: #0CCBE8;
+    text-decoration: none;
+    margin-left: 10%;
+    font-size: 1.3em;
+}
+a:active{
+    color: #0CCBE8;
+}
+a:hover{
+    color: #0CCBE8;
+}
+
+a:visited{
+    color: #0CCBE8;
+}
+section{
+    margin-top: 5%;
+}

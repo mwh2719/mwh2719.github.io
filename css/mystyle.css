@@ -1,0 +1,154 @@
+
+html{
+    scroll-behavior: smooth;
+}
+
+.home-title span{
+    color: #2980b9;
+}
+
+.hire-me-btn{
+    background-color: #2980b9;
+}
+
+.resume-btn{
+    background-color: #2980b9;
+}
+
+.hire-me-btn:hover{
+    background-color: #216896;
+}
+
+.resume-btn:hover{
+    background-color: #216896;
+}
+
+.hire-me-btn:active{
+    background-color: #216896;
+}
+
+.resume-btn:active{
+    background-color: #216896;
+}
+
+.custom-nav{
+    background: #2980b9;
+}
+
+
+.container h3{
+    color: #2980b9;
+}
+
+.skill-inner h2{
+    color: #2980b9;
+}
+
+#experience{
+    background: #2980b9;
+}
+.footer-top{
+    background-color: #2980b9;
+}
+.card-content a{
+    color: #2980b9;
+}
+.card-reveal a{
+    color: #2980b9;
+}
+
+
+#subsections{
+    font-family: "Roboto",sans-serif;
+}
+
+#subsections h2{
+    display: inline-block;
+    margin-right: 50%;
+}
+
+#subsections img{
+    width: 30%;
+    display: inline-block;
+    margin-left: 5%;
+}
+
+#subsections p{
+    display: inline-block;
+    width: 60%;
+    font-size: 1.2em;
+}
+
+.even a:link{
+    text-decoration: underline;
+    color: white;
+}
+.even a:hover{
+    color: white;
+}
+.even a:active{
+    color: white;
+}
+.even a:visited{
+    color: white;
+}
+
+.odd{
+    border-bottom: 2px solid #2c3e50;
+    background-color: white;
+    color: #727272;
+    padding-left: 8%;
+}
+
+
+.even{
+    background-color: #2980b9;
+    color: white;
+    padding-left: 8%;
+    border-bottom: 2px solid #2c3e50;
+}
+
+.even .title{
+    color: white;
+}
+
+.odd .title{
+    color: #727272;
+}
+
+
+.odd a:link{
+    text-decoration: underline;
+     color: #2980b9;
+}
+.odd a:hover{
+     color: #2980b9;
+}
+.odd a:active{
+     color: #2980b9;
+}
+.odd a:visited{
+     color: #2980b9;
+}
+
+
+.material-icons{
+    color: #2980b9;
+}
+
+.submit-btn{
+    color: #2980b9;
+}
+
+.contact{
+    width: 100%;     
+}
+
+.footer-inner a{
+    color: #2980b9;
+}
+
+
+.pro-bar-container.color-midnight-blue	{ border-color: #2c3e50; background: white; }
+
+
