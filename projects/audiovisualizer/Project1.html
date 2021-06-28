@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Audio Visualizer</title>
+    <link rel="stylesheet" href="style/main.css">
+    <script src="src/loader.js" type="module"></script>
+    <link href="https://fonts.googleapis.com/css?family=Exo+2&display=swap" rel="stylesheet">
+</head>
+<body>
+    <canvas width="600" height="400"></canvas>
+    <audio></audio>
+    <div id="controls">
+           <div id="musicControls">
+                <select id="songSelect">
+                    <option value="media/bensound-dreams.mp3">Dreams</option>
+                    <option value="media/bensound-dubstep.mp3">Dubstep</option>
+                    <option value="media/bensound-funnysong.mp3">Funny Song</option>
+                </select>
+                <button id="play">Play &#9658;</button>
+                <button id="restart">Restart &#8634;</button>
+                <button id="fsButton">Full Screen</button>
+            </div>
+            <br>
+            <div id="userControls">
+                <p id="checkBoxes">
+                   Filters:
+                    <span><input type="checkbox" id="bassBasedCB" class="checkbox"><label for="bassBasedCB">Bass Based Tint</label></span>
+                    <span><input type="checkbox" id="backgroundCB" class="checkbox"><label for="backgroundCB">Changing Background</label></span>
+                    <span><input type="checkbox" id="LoFiCB" class="checkbox"><label for="LoFiCB">Lo-Fi</label></span>
+                </p>
+                <p id="radio">
+                   Background Design:
+                    <span><input type="radio" name="design" id="designNone" value="none" checked><label for="designNone">None</label></span>
+                    <span><input type="radio" name="design" id="designDots" value="dots"><label for="designDots">Dots</label></span>
+                    <span><input type="radio" name="design" id="designSpeaker" value="speaker"><label for="designSpeaker">Speaker</label></span>
+                </p>
+                <div id="sliders">
+                    <section>
+                        Volume: <input type="range" id="volumeSlider" min="0" max="2" value="1" step="0.01">
+                        <span id="volumeLabel">???</span>
+                    </section>
+                    <section>
+                        Amount of volume curves: <input type="range" id="curveSlider" min="0" max="20" value="10" step="1">
+                        <span id="curveLabel">???</span>
+                    </section>
+                    <section>
+                        Frequency Booster: <input type="range" id="frequencySlider" min="-5" max="5" value="0" step="1">
+                        <span id="frequencyLabel">???</span>
+                    </section>
+                </div>
+            </div>
+    </div>
+    <br>
+    <div id="showTables">
+        <section>
+            <label for="frequency">Frequency Data</label>
+            <button id="frequency">Show</button>
+        </section>
+        <br>
+        <section>
+            <label for="waveform">Waveform Data</label>
+            <button id="waveform">Show</button>
+        </section>
+    </div>
+    <br>
+    <div id="tables">
+        <div id="tableOneSec" display="none">
+            <span><label for="tableOne">Frequency Data</label></span>
+            <table id="tableOne"></table>
+        </div>
+        <br>
+        <div id="tableTwoSec" display="none">
+            <span><label for="tableTwo">Waveform Data</label></span>
+            <table id="tableTwo"></table>
+        </div>
+    </div>
+</body>
+
+</html>

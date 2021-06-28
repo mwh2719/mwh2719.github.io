@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+ 	<title>Rocket Launches</title>
+ 	<link rel="stylesheet" type="text/css" href="CSS/main.css"/>
+ 	
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+ 	
+    <script src="JS/main.js"></script>
+</head>
+
+
+<body>
+<div id="everything">
+<header>
+	<h1>Rocket Launches</h1>
+</header>
+    <nav><h3>Use these widgets to help you filter through rocket launches from 2006 to today as well as upcoming launches.</h3>
+
+<div class="widgets">
+	Nationality <br>(Capitalization and Spelling Matter)<br><br>
+	<input id="natiTerm" type="text" size="20" maxlength="20" autofocus value="1" />
+</div>
+
+<div class="widgets">
+	Customer <br>(Capitalization and Spelling Matter)<br><br>
+	<input id="custTerm" type="text" size="20" maxlength="20" value="1" />
+</div>
+<div class="widgets">
+    Launch Outcome <br><br>
+	<select id="succOrFail">
+	    <option value="null" selected>Both</option>
+		<option value="true">Success</option>
+		<option value="false">Failure</option>
+	</select>
+</div>
+<div class="widgets">
+    Sort By <br><br>
+	<select id="sortBy">
+		<option value="oldest" selected>Oldest to Newest</option>
+		<option value="newest">Newest to Oldest</option>
+	</select>
+</div>
+<fieldset>
+    <legend>Choose dates to look for launches between</legend>
+
+    <div>
+        <label for="start">Start</label>
+        <input type="date" id="start" name="trip"
+               value="2006-03-24"
+               min="2006-03-24"/>
+    </div>
+
+    <div>
+        <label for="end">End</label>
+        <input type="date" id="end" name="trip"
+              value=""
+               min="2006-03-25"/>
+    </div>
+
+</fieldset>
+
+<div class="widgets">
+	<button type="button" id="search" class="green">Search!<br/></button>
+</div>
+</nav>
+
+
+<h2>Results</h2>
+<div id="content">
+	    <p>No data yet!</p>
+</div>
+ 
+<footer id="copyright"> &#169; 2018 Mitchell Heard</footer>
+</div>
+</body>
+
+</html>

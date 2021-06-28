@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Personalized Astrology Generator</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+	<link rel="stylesheet" href="style/index.css">
+   <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-database.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyC5389l8nyTBl1ZajwKQvrWMGeqgu90stw",
+        authDomain: "horoscope-78b59.firebaseapp.com",
+        databaseURL: "https://horoscope-78b59.firebaseio.com",
+        projectId: "horoscope-78b59",
+        storageBucket: "horoscope-78b59.appspot.com",
+        messagingSenderId: "66574197461",
+        appId: "1:66574197461:web:a353fa29a9d1faf0f4785c",
+        measurementId: "G-ED326H6S49"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="//unpkg.com/vue@latest/dist/vue.min.js"></script>
+    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+      <script src="src/main.js" type="module"></script>
+</head>
+<body>
+ <div id="app">
+  <main class="container">
+     <div class="jumbotron">
+         <div class = "container">
+             <img v-bind:src="signSource" alt="Zodiac Symbol" id="zodiacSymbol" class="img-thumbail float-right img-fluid">
+                <h1>Astrology Generator</h1>
+      
+             <header-info></header-info>
+            
+         </div>
+     </div>
+     
+    <div id="sign-section">
+          <label for="sign">Choose Astrological Sign:</label>
+          <select id="sign" class="btn-secondary" v-model="sign" @change="updateSign();  makeURLList()">
+              <option value="Aries">Aries</option>
+              <option value="Taurus">Taurus</option>
+              <option value="Gemini">Gemini</option>
+              <option value="Cancer">Cancer</option>
+              <option value="Leo">Leo</option>
+              <option value="Virgo">Virgo</option>
+              <option value="Libra">Libra</option>
+              <option value="Scorpio">Scorpio</option>
+              <option value="Sagittarius">Sagittarius</option>
+              <option value="Capricorn">Capricorn</option>
+              <option value="Aquarius">Aquarius</option>
+              <option value="Pisces">Pisces</option>
+          </select>
+      </div>
+      <div id="search-section">
+          <label for="search" id="search-label">Search for horosocpes based on sentiment:</label>
+          <div class="input-group mb-3">
+              <input type="text" class="form-control" id="search" aria-label="Sentiment"v-model="searchWord" @change="saveSearch" v-bind:placeholder="placeholder">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="search-button" @click="searchForSentiment" >Search</button>
+              </div>
+            </div>
+      </div>
+     <div id="rating">
+         <h4>Accuracy Rating:</h4>
+             <!--<button type="button" class="btn btn-dark" v-on:click="ratingSelected">1</button>
+             <button type="button" class="btn btn-dark"  v-on:click="ratingSelected">2</button>
+             <button type="button" class="btn btn-dark"  v-on:click="ratingSelected">3</button>
+             <button type="button" class="btn btn-dark"  v-on:click="ratingSelected">4</button>
+             <button type="button" class="btn btn-dark"  v-on:click="ratingSelected">5</button>
+             <button type="button" class="btn btn-dark"  v-on:click="ratingSelected">6</button>
+             <button type="button" class="btn btn-dark"  v-on:click="ratingSelected">7</button>
+             <button type="button" class="btn btn-dark"  v-on:click="ratingSelected">8</button>
+             <button type="button" class="btn btn-dark"  v-on:click="ratingSelected">9</button>
+             <button type="button" class="btn btn-dark"  v-on:click="ratingSelected">10</button>-->
+             <input type="range" class="form-control-range" id="rating-slider" min="0" max="1" value="-1" v-model="rating" step=".01" v-bind:value="rating" @mousedown="sliderHeld" @mouseleave="sliderReleased" @mouseup="sliderReleased" @touchstart="sliderHeld" @touchend="sliderReleased" @touchcancel="sliderReleased">
+                <img src="media/verysad.png" alt="Emoji description of rating"  v-bind:src="emoji">
+         <!--<button id="submitRat" type="button" class="btn btn-primary" @click="submitRating()">Submit</button>-->
+      </div>
+     <div id="horoscope">
+         <h3>Horoscope:</h3>
+         <p class="lead" >
+             {{horoscope}}
+         </p>
+         <img src ="media/loader.gif" alt="Loading icon" v-bind:hidden="hidden">
+     
+      </div>
+      <div id="nextDiv">
+           <button type="button" class="btn btn-primary" @click= "submitRating" v-bind:disabled="disable" id="next" v-bind:hidden="hideButton">Next</button>
+          <span class="tooltip" v-bind:hidden="disableTT">Select the accuracy before continuing</span>
+      </div>
+      
+      <footer-copyright></footer-copyright>
+    
+      
+    </main>
+    </div>
+</body>
+</html>

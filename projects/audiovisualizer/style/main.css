@@ -1,0 +1,127 @@
+
+*{
+    color: white;
+    font-family: 'Exo 2', sans-serif;
+}
+
+body{
+    background-color:  #000033;
+}
+
+canvas{
+    border: 1px gray solid;
+    display: block;
+}
+
+button{
+    width: 100px;
+    height: 30px;
+    color: black;
+    box-shadow: 5px 5px 2px #2C2C2E;
+    transition: .5s
+}
+button:hover{
+    transition: .5s;
+   box-shadow: 10px 10px 5px #2C2C2E; 
+    width: 102px;
+    height: 32px;
+}
+b{
+    color: black;
+}
+
+#controls{
+    display: inline-block;
+    float: left;
+    margin-top: 20px;
+    width: 750px;
+    background-color: #003270;
+    padding-top: 10px;
+    border: 2px #303338 inset;
+}
+#controls div{
+    display: inline-block;
+}
+#controls span{
+    display: inline-block;
+}
+
+
+#userControls{
+    width: 750px;
+}
+
+#musicControls{
+    display: block;
+    clear: both;
+}
+
+#controls button{
+    margin-left: 40px;
+}
+
+#checkBoxes span{
+    display: block;
+    
+}
+ 
+#checkBoxes{
+    display: inline-block;
+    margin-left: 10px;
+}
+
+#radio{
+    display: inline-block;
+    margin-left: 30px;
+}
+#radio span{
+    display: block;
+}
+#sliders{
+    display: inline-block;
+    margin-left: 20px;
+}
+
+#frequency, #waveform{
+    width: 50px; 
+    height: 20px;
+    margin-top: 20px;
+}
+
+#showTables{
+    background-color: #003270;
+    width: 200px;
+    height: 150px;
+    float:left;
+    display: inline-block;
+    margin-top: 2px;
+    margin-left: 10px;
+    text-align: center;
+    border: 2px #303338 inset;
+}
+
+#tables{
+    clear: both;
+    display: block;
+    padding-top: 20px;
+}
+
+select{
+    color: black;
+    width: 100px;
+    height: 30px;
+    margin-left: 20px;
+}
+
+option{
+    color: black;
+}
+
+table{
+    border:1px solid white;
+}
+td,th{
+    border:1px solid white;
+    width:30px;
+}
+

@@ -1,0 +1,26 @@
+Mitchell Heard
+Project 2
+
+Process:
+I worked on the JavaScript for the website first so that I would have a functioning website, with several easy to use and completely functioning search widgets. This took around 15 plus hours to make the code retrieve the information,search through the information, filter out results that do not meet the search criteria, and then display formatted results to the user. I used the gif finder base code at first but I found that I needed to change, remake, restructure, and add a lot of my own code in order to make this work. I had some trouble comparing the dates at first because I was often removing dates that were within the given timeline or leaving extra dates in the array. After I fixed that, I had trouble with the information that was being returned as arrays inside of arrays for a while because I could not remove it from the results array without throwing off the rest of the array.
+When I finally figured that out, I had some trouble displaying the links,
+especially since some of them have no address to go to. That was the last of the big issues I encountered though. 
+After that I just added widgets for changing the order of the results, added some styling to the page, and added 
+some more details and information to the results that were displayed to the user.  
+
+
+Sources:
+Background Image: https://www.toptal.com/designers/subtlepatterns/
+Banner Image: https://www.cbsnews.com/news/final-delta-2-rocket-launches-1-billion-ice-probe-2018-09-15/
+
+Special:
+I do not have anything special to show, but I do have a few comments you should know when using the page. One is that when typing in either of the search bars, spelling and capitalization does matter. I tried to fix this by setting the results to lowercase and trimming them, but it did not work and the results returned were always incorrect. Another comment is that most of the flickr image links do not work and the ones that do often send the user to empty pages. I tried to filter out links that did not lead anywhere, but this often would throw errors that would cause the page to not fully load and therefore only some results were shown.
+
+
+Meeting requirements:
+I met the requirements of the project by making my site simple, yet functional, easy to use and understand, and visually appealing. I also added all the widgets required, plus some such as the date tool, the sort by tool, and the separation of results onto multiple pages. My HTML passes validation other than the fact that the date input is not supported in all browsers. My CSS passes validation completely. My code is mostly clean and well commented other than the display results function in my JavaScript file, which I tried to separate out but it became even more complicated by doing that so I just left it there and commented it out as best as I could. The site works on all display sizes other than the very smallest the browser goes, which is simply because of the search bars.
+
+
+Grade:
+I feel I deserve a 95 on this project because I spent around 15 plus hours making,
+formatting, and scripting the website. The only issues that I still feel exists are that the search input needs to be exactly right, some of the links do not work(though I cannot really help that) and some of the JavaScript code is not the prettiest to look at. Other than that, I am very proud of this site and definitely put my best effort into making it.
