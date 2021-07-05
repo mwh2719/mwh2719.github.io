@@ -48,7 +48,11 @@ html{
     background: #2980b9;
 }
 .footer-top{
-    background-color: #2980b9;
+    background-color: #fafafa;
+    
+}
+.footer-top-inner p, .footer-top-inner h2{
+    color: #727272;
 }
 .card-content a{
     color: #2980b9;
