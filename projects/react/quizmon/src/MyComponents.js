@@ -58,19 +58,17 @@ function Welcome(props) {
 //component that will display game and handle game logic 
 function PlayGame(props) {
     return (
-            <Question results={props.results[props.questionNumber - 1]} number={props.questionNumber} incrementQuestion={props.incrementQuestion} transferToCheck={props.transferToCheck} />
+            <Question results={props.results[props.questionNumber - 1]} number={props.questionNumber} incrementQuestion={props.incrementQuestion} transfer={props.transfer} />
         );
 }
 
 function Question(props) {
-    console.log(props.results);
-
     return (
         <div id="questionInfo">
             <h1>{props.results.category}</h1>
             <h3>{props.results.difficulty}</h3>
             <h2>{props.number}. {props.results.question}</h2>
-            <Choices results={props.results} transferToCheck={props.transferToCheck} />
+            <Choices results={props.results} transfer={props.transfer} />
         </div>
         );
 }
@@ -87,11 +85,12 @@ function Choices(props) {
     }
 
 
+    //Checking if the question is true /false or multiple choice
     if (props.results.type == "boolean") {
         return (
             <div id="answers">
-                <button value="True" onClick={props.transferToCheck}>True</button>
-                <button value="False" onClick={props.transferToCheck}>False</button>
+                <button value="True" onClick={props.transfer}>True</button>
+                <button value="False" onClick={props.transfer}>False</button>
             </div>
         );
     }
@@ -109,7 +108,7 @@ function Choices(props) {
         let choices = [];
 
         for (let i = 0; i < answers.length; i++) {
-            choices.push(<button value={answers[i]} key={i} onClick={props.transferToCheck}>{answers[i]}</button>);
+            choices.push(<button value={answers[i]} key={i} onClick={props.transfer}>{answers[i]}</button>);
         }
 
         return <div> {choices} </div>;
@@ -121,19 +120,42 @@ function Choices(props) {
 
 //component to handle checking if the player answered the question correctly and displaying it to them
 function CheckAnswer(props) {
+
+    //Helper function to move the player to the next question and save their answer result
+    function onClick() {
+
+        if (props.playerAnswer == props.results[props.questionNumber - 1].correct_answer) {
+            props.incrementCorrect();
+        }
+        else {
+            props.incrementWrong();
+        }
+        
+
+        //Checking if this is the last question or not and changing what happens on click based of that
+        if (props.questionNumber == props.results.length) {
+            props.transfer();
+        }
+        else {
+            props.incrementQuestion();
+        }
+    }
+
     if (props.playerAnswer == props.results[props.questionNumber - 1].correct_answer) {
+        
         return (
             <div>
                 <Results correct={true} />
-                <button onClick={props.incrementQuestion}>Next</button>
+                <button onClick={onClick}>Next</button>
             </div>
         );
     }
-    else if (props.playerAnswer != props.results[props.questionNumber].correct_answer) {
+    else if (props.playerAnswer != props.results[props.questionNumber - 1].correct_answer) {
+        
         return (
             <div>
                 <Results correct={false} correct_answer={props.results[props.questionNumber - 1].correct_answer} playerAnswer={props.playerAnswer} />
-                <button onClick={props.incrementQuestion}>Next</button>
+                <button onClick={onClick}>Next</button>
             </div>
         );
     }
@@ -166,9 +188,22 @@ function Results(props) {
 
 //component that will display the end game screen
 function GameOver(props) {
+    //Variable to hold the number of questions the player answered
+    let numberOfQuestions = props.correctAmount + props.wrongAmount;
+
+    //variable to hold percent correct the playerAnswered
+    let percentCorrect;
+
+    percentCorrect = (props.correctAmount * 100) / (numberOfQuestions);
 
     return (
-        null
+        <div>
+            <h1>The End</h1>
+            <h2>You scored {percentCorrect}% </h2> 
+            <h3>Correct Answers: {props.correctAmount}</h3>
+            <h3>Incorrect Answers: {props.wrongAmount}</h3>
+            <button onClick={props.transfer}>Return to main menu</button>
+        </div>
         );
 }
 
@@ -190,13 +225,14 @@ function GameScreen(props) {
             return <Welcome database={props.database} />;
             break;
         case "game":
-            return <PlayGame results={props.results} questionNumber={props.questionNumber} transferToCheck={props.transferToCheck} />;
+            return <PlayGame results={props.results} questionNumber={props.questionNumber} transfer={props.transferToCheck} />;
             break;
         case "rightOrWrong":
-            return <CheckAnswer results={props.results} questionNumber={props.questionNumber} incrementQuestion={props.incrementQuestion} playerAnswer={props.playerAnswer} />;
+            return <CheckAnswer results={props.results} questionNumber={props.questionNumber} incrementQuestion={props.incrementQuestion} playerAnswer={props.playerAnswer} transfer={props.transferToEnd}
+                incrementWrong={props.incrementWrong} incrementCorrect={props.incrementCorrect} />;
             break;
         case "end":
-
+            return <GameOver correctAmount={props.correctAmount} wrongAmount={props.wrongAmount} transfer={props.transferToStartMenu} />;
             break;
         case "stats":
 

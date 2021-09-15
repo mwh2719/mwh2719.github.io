@@ -9,11 +9,16 @@ class App extends React.Component{
         super(props);
 
         //setting the game state of the app to start when the app is constructed
-        this.state = { gameState: "start", results: null, questionNumber: 1, playerAnswer: null };
+        this.state = { gameState: "start", results: null, questionNumber: 1, playerAnswer: null, correct: 0, wrong: 0 };
 
         this.apiCall = this.apiCall.bind(this);
         this.increment = this.increment.bind(this);
         this.transferToCheck = this.transferToCheck.bind(this);
+        this.transferToEnd = this.transferToEnd.bind(this);
+        this.transferToStat = this.transferToStat.bind(this);
+        this.transferToStartMenu = this.transferToStartMenu.bind(this);
+        this.incrementCorrect = this.incrementCorrect.bind(this);
+        this.incrementWrong = this.incrementWrong.bind(this);
     }
 
     //function to retrieve the trivia questions from the JSON API
@@ -74,11 +79,37 @@ class App extends React.Component{
         this.setState({ questionNumber: ++this.state.questionNumber, gameState: "game", playerAnswer: null });
     }
 
+    //Method to increment the number of correct responses
+    incrementCorrect() {
+        this.setState({ correct: ++this.state.correct });
+    }
+
+    //Method to increment the number of incorrect responses
+    incrementWrong() {
+        this.setState({ wrong: ++this.state.wrong });
+    }
+
+    //Method that changes the game state to the end sreen
+    transferToEnd() {
+        this.setState({ gameState: "end", questionNumber: 1, playerAnswer: null })
+    }
+
+    //Method that changes game state to the stat screen
+    transferToStat() {
+        this.setState({ gameState:"stats" })
+    }
+
+    //Method that changes the game state to the start menu
+    transferToStartMenu() {
+        this.setState({ gameState: "start", results: null, correct: 0, wrong: 0 })
+    }
+
     render(){
         return (
             <div className="App">
                 <GameScreen currentState={this.state.gameState} database={this.apiCall} results={this.state.results} questionNumber={this.state.questionNumber}
-                    incrementQuestion={this.increment} playerAnswer={this.state.playerAnswer} transferToCheck={this.transferToCheck} />
+                    incrementQuestion={this.increment} playerAnswer={this.state.playerAnswer} transferToCheck={this.transferToCheck} transferToEnd={this.transferToEnd} transferToStat={this.transferToStat}
+                    transferToStartMenu={this.transferToStartMenu} incrementWrong={this.incrementWrong} incrementCorrect={this.incrementCorrect} correctAmount={this.state.correct} wrongAmount={this.state.wrong} />
             </div>
         );
     }
