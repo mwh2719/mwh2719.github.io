@@ -170,7 +170,7 @@ function PlayGame(props) {
     return (
         <div>
             <div className="content">
-                <button className="menu button" id="escape" onClick={props.transferToStartMenu}>X</button>
+                <button className="menu button" id="escape" onClick={props.transferToStartMenu}>&#x2716;</button>
             {timer}
             <Question results={props.results[props.questionNumber - 1]} number={props.questionNumber} answered={props.check} answerArray={props.answerArray} playerAnswer={props.playerAnswer}
                 answers={answers} selectAnswer={selectAnswer} />
