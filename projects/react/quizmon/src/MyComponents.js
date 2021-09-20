@@ -135,7 +135,6 @@ function PlayGame(props) {
         props.checkAnswer(e);
     }
 
-
     let timer = <div id="timer-wrap">
         <audio className="game audio" id="countdown-music" autoPlay={!props.check}>
             <source src="countdown.wav" />
@@ -147,7 +146,6 @@ function PlayGame(props) {
         ]} size={75} rotation='counterclockwise' onComplete={selectAnswer} />
     </div>;
     let results = null;
-    let correct = false;
     let particleEffect = null;
     if (props.check) {
         timer = <div id="timer-wrap"></div>;
@@ -172,6 +170,7 @@ function PlayGame(props) {
     return (
         <div>
             <div className="content">
+                <button className="menu button" id="escape" onClick={props.transferToStartMenu}>X</button>
             {timer}
             <Question results={props.results[props.questionNumber - 1]} number={props.questionNumber} answered={props.check} answerArray={props.answerArray} playerAnswer={props.playerAnswer}
                 answers={answers} selectAnswer={selectAnswer} />
@@ -360,7 +359,7 @@ function GameScreen(props) {
         case "game":
             return <PlayGame results={props.results} questionNumber={props.questionNumber} checkAnswer={props.checkAnswer}
                 transfer={props.transferToEnd} check={props.check} incrementQuestion={props.incrementQuestion} playerAnswer={props.playerAnswer}
-                saveResult={props.saveResult} saveAnswerOrder={props.saveAnswerOrder} answerArray={props.answerArray} answerCorrect={props.answerCorrect} />;
+                saveResult={props.saveResult} saveAnswerOrder={props.saveAnswerOrder} answerArray={props.answerArray} answerCorrect={props.answerCorrect} transferToStartMenu={props.transferToStartMenu} />;
             break;
         case "end":
             return <GameOver correct={props.correct} wrong={props.wrong} transfer={props.transferToStartMenu} />;
@@ -378,7 +377,7 @@ function GameScreen(props) {
 function cleanString(string) {
     return string.replace(/&quot;/g, '\"').replace(/&#039;/g, '\'').replace(/&amp;/g, '\&').replace(/&Uuml;/g, '\Ü').replace(/&deg;/g, '\°').replace(/&ouml;/g, '\ö').replace(/&rsquo;/g, '\'')
         .replace(/&minus;/g, '\-').replace(/&iacute;/g, '\í').replace(/&oacute;/g, '\ó').replace(/&rdquo;/g, '\"').replace(/&ldquo;/g, '\"').replace(/&lt;/g, '\<').replace(/&lt;/g, '\>')
-        .replace(/&ne;/g, '\≠').replace(/&le;/g, '\≤').replace(/&le;/g, '\≥').replace(/&uuml;/g, '\ü');
+        .replace(/&ne;/g, '\≠').replace(/&le;/g, '\≤').replace(/&le;/g, '\≥').replace(/&uuml;/g, '\ü').replace(/&eacute;/g, '\é');
 }
 
 //Function to return firework particle effect

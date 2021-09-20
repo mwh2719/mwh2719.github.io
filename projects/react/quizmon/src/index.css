@@ -141,6 +141,13 @@ input[type=number] {
         background-color: #BCC2D1;
     }
 
+    #escape{
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        border-radius: 100%;
+    }
+
 #timer-wrap {
     flex: 1;
     justify-content: center;
