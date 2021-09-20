@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/projects/react/quizmon/static/css/main.95d04b2a.chunk.css",
+    "main.css": "/projects/react/quizmon/static/css/main.9fe5bbb7.chunk.css",
     "main.js": "/projects/react/quizmon/static/js/main.11e8d217.chunk.js",
     "main.js.map": "/projects/react/quizmon/static/js/main.11e8d217.chunk.js.map",
     "runtime-main.js": "/projects/react/quizmon/static/js/runtime-main.91daa0c5.js",
@@ -8,13 +8,13 @@
     "static/js/2.5384b398.chunk.js": "/projects/react/quizmon/static/js/2.5384b398.chunk.js",
     "static/js/2.5384b398.chunk.js.map": "/projects/react/quizmon/static/js/2.5384b398.chunk.js.map",
     "index.html": "/projects/react/quizmon/index.html",
-    "static/css/main.95d04b2a.chunk.css.map": "/projects/react/quizmon/static/css/main.95d04b2a.chunk.css.map",
+    "static/css/main.9fe5bbb7.chunk.css.map": "/projects/react/quizmon/static/css/main.9fe5bbb7.chunk.css.map",
     "static/js/2.5384b398.chunk.js.LICENSE.txt": "/projects/react/quizmon/static/js/2.5384b398.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.91daa0c5.js",
     "static/js/2.5384b398.chunk.js",
-    "static/css/main.95d04b2a.chunk.css",
+    "static/css/main.9fe5bbb7.chunk.css",
     "static/js/main.11e8d217.chunk.js"
   ]
 }

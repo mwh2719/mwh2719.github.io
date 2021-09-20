@@ -48,7 +48,7 @@ function Welcome(props) {
                     <form onSubmit={props.database}>
                         <div id="input-fields">
                             <label htmlFor="amount">Number of Questions: </label>
-                            <input type="number" id="amount" name="amount" min="1" max="50" defaultValue="10" /><br />
+                            <input type="number" id="amount" name="amount" min="1" max="50" defaultValue="10"/><br />
                             <label htmlFor="category">Category: </label>
                             <select id="category" name="category">
                                 <option value="any">Random</option>
