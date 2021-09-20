@@ -1,0 +1,226 @@
+body{
+    background-color: #097FDB;
+}
+#app {
+    text-align: center;
+    line-height: 2.5em;
+    position: relative;
+}
+
+button {
+    background-color: #065694;
+    padding: 10px 20px 10px 20px;
+    border-radius: 25%;
+    margin: 2%;
+    box-shadow: 2px 2px 1px #043D69;
+    min-width: 10%;
+    font-size: 30px;
+}
+
+button:not([disabled]) {
+    background-color: #097FDB;
+    padding: 10px 20px 10px 20px;
+    border-radius: 25%;
+    margin: 2%;
+    box-shadow: 5px 5px 2px #043D69;
+    transition: .1s linear;
+}
+
+button:not([disabled]):hover {
+    cursor: pointer;
+    transform: scale(.95,.95);
+    transform: translate(2px,2px);
+    box-shadow: 2px 2px 1px #043D69;
+}
+hr {
+    width: 75%;
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.menu.button{
+    border-radius: 50%;
+    margin-top: 50px;
+}
+
+.content {
+    border: 2px solid black;
+    width: 75%;
+    margin: auto;
+    margin-top:5%;
+    min-height: 800px;
+    border-radius: 20px;
+    z-index: 10;
+    position: relative;
+    background-color: white;
+    align-content: center;
+    padding-top: 2%;
+}
+
+#app-title {
+    font-size: 80px;
+    color: #097FDB;
+}
+
+.welcome-title-appear{
+    transform: translateX(-50%);
+    opacity: 0.01;
+}
+
+.welcome-title-appear.welcome-title-appear-active{
+    transform: translateX(0%);
+    opacity: 1;
+    transition: 2s ease-out;
+}
+
+#welcome-div{
+    position:relative;
+    width: 100%;
+    height: 100px;
+}
+
+.input-fade-in-appear{
+    opacity: 0;
+}
+
+.input-fade-in-appear.input-fade-in-appear-active{
+    opacity: 1;
+    transition: .5s ease-out opacity;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+#input-div {
+    width: 100%;
+    margin: auto auto auto auto;
+    height: auto;
+    line-height: 4em;
+    font-size: 25px;
+    transition-delay: 2000ms;
+}
+    #input-div input {
+        font-size: 20px;
+        text-align: center;
+        border-radius: 5px;
+        border: solid 1px;
+        background-color: #D1D7E8;
+    }
+
+    #input-div select {
+        font-size: 20px;
+        text-align: center;
+        border-radius: 5px;
+        border: solid 1px;
+        background-color: #D1D7E8;
+    }
+    #input-div select:hover{
+        cursor: pointer;
+    }
+
+    #input-div select::-webkit-scrollbar{
+        width: 15px;
+    }
+
+    #input-div select::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        border-radius: 10px;
+    }
+    #input-div select::-webkit-scrollbar-thumb {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        border-radius: 10px;
+        background-color: #BCC2D1;
+    }
+
+    #escape{
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        border-radius: 100%;
+        width: auto;
+    }
+
+#timer-wrap {
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+}
+
+#timer-wrap div{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#question-wrap{
+    text-align: center;
+}
+
+.question-anim-appear{
+    opacity: .1;
+}
+.question-anim-appear.question-anim-appear-active{
+    opacity: 1;
+    transition: .5s ease-in-out opacity;
+}
+
+
+.choice-growing-appear {
+    transform: scale3d( .1, .1, .1);
+}
+
+.choice-growing-appear.choice-growing-appear-active {
+    transform: scale3d(1,1,1);
+    transition: 1s linear;
+}
+
+
+#answers {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+#answers button {
+    width: 80%;
+    height: auto;
+    font-size: 45px;
+    padding: 20px 7px 20px 4px;
+}
+
+#answers .mult-choice{
+    width: 40%;
+    margin: 10px 5% 10px 5%;
+}
+
+
+.right-answer {
+    color: black;
+    background-color: #18A835;
+    box-shadow: 2px 2px 1px #0F6B21;
+}
+
+.wrong-answer {
+    background-color: #E52809;
+    box-shadow: 2px 2px 1px #5E1004;
+}
+
+#score {
+    font-size: 120px;
+    color: #097FDB;
+}
+#end-response{
+    font-size: 40px;
+}
+
+
