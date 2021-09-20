@@ -1,5 +1,9 @@
-body{
+* {
+    font-family: 'Gluten', cursive;
+}
+body {
     background-color: #097FDB;
+    
 }
 #app {
     text-align: center;
@@ -15,6 +19,7 @@ button {
     box-shadow: 2px 2px 1px #043D69;
     min-width: 10%;
     font-size: 30px;
+    height: auto;
 }
 
 button:not([disabled]) {
@@ -42,6 +47,10 @@ hr {
 .menu.button{
     border-radius: 50%;
     margin-top: 50px;
+}
+
+#next-button{
+    padding-top: 2px;
 }
 
 .content {
@@ -151,7 +160,7 @@ input[type=number] {
     padding: 2px;
     margin: 0;
     text-align: center;
-    line-height: 21px;
+    line-height: 42px;
 }
 
 #timer-wrap {
