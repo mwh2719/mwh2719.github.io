@@ -277,9 +277,11 @@ function Answer(props) {
         setTimeout(() => {
             let temp = document.getElementById("answers").children[props.timerDelay];
 
-            console.log("call");
             temp.className += " grow-anim";
-        }, props.timerDelay * 500)
+        }, props.timerDelay * 500);
+        
+        document.getElementById("answers").children[props.timerDelay].onmouseover = () =>
+        { document.getElementById("answers").children[props.timerDelay].className = document.getElementById("answers").children[props.timerDelay].className.replace("grow-anim", "answer-ready") };
     });
 
 

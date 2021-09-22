@@ -305,6 +305,11 @@ input[type=number] {
 .answer.active.grow-anim {
     opacity: 1;
     animation: grow 1s;
+    animation-iteration-count: 1;
+}
+
+.answer.active.answer-ready{
+    opacity: 1;
 }
 
 #answers button {
