@@ -250,9 +250,9 @@ function Choices(props) {
         if (props.result.type == "boolean") {
             timerDelay = 0;
             className += " boolean ";
-            choices.push(<Answer answer={"True"} selectAnswer={props.selectAnswer} className={props.className} disabled={props.disabled} timerDelay={timerDelay} />);
+            choices.push(<Answer answer={"True"} selectAnswer={props.selectAnswer} className={className} disabled={props.disabled} timerDelay={timerDelay} />);
             timerDelay += 1;
-            choices.push(<Answer answer={"False"} selectAnswer={props.selectAnswer} className={props.className} disabled={props.disabled} timerDelay={timerDelay} />);
+            choices.push(<Answer answer={"False"} selectAnswer={props.selectAnswer} className={className} disabled={props.disabled} timerDelay={timerDelay} />);
         }
         else {
             className += " mult-choice ";
@@ -275,9 +275,11 @@ function Choices(props) {
 function Answer(props) {
     useEffect(() => {
         setTimeout(() => {
-            let temp = document.getElementById("answers").children[props.timerDelay];
-
-            temp.className += " grow-anim";
+            let temp = document.getElementById("answers");
+            if (temp) {
+                temp.children[props.timerDelay].className += " grow-anim";
+            }
+            
         }, props.timerDelay * 500);
         
         document.getElementById("answers").children[props.timerDelay].onmouseover = () =>
