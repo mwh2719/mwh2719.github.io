@@ -32,12 +32,12 @@ button:not([disabled]) {
     transition: .1s linear;
 }
 
-button:not([disabled]):hover {
-    cursor: pointer;
-    transform: scale(.95,.95);
-    transform: translate(2px,2px);
-    box-shadow: 2px 2px 1px #043D69;
-}
+    button:not([disabled]):hover {
+        cursor: pointer;
+        transition: all ease-in-out .25s;
+        transform: scale(.98) translate(10px,7px);
+        box-shadow: 2px 2px 1px #043D69;
+    }
 hr {
     width: 75%;
     border: 0;
