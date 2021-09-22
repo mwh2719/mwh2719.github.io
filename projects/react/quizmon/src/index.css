@@ -274,7 +274,7 @@ input[type=number] {
 
 @keyframes grow{
     from{
-        transform: scale(5%, 5%);
+        transform: scale(5%, 5%) rotateZ(1440deg);
     }
     to{
         transform: scale(100%, 100%);
