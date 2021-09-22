@@ -174,8 +174,8 @@ function PlayGame(props) {
             <div className="content">
                 <button className="menu button" id="escape" onClick={props.transferToStartMenu}>&#x2716;</button>
             {timer}
-            <Question results={props.results[props.questionNumber - 1]} number={props.questionNumber} answered={props.check} answerArray={props.answerArray} playerAnswer={props.playerAnswer}
-                answers={answers} selectAnswer={selectAnswer} />
+                <Question results={props.results[props.questionNumber - 1]} number={props.questionNumber} answered={props.check} answerArray={props.answerArray} playerAnswer={props.playerAnswer}
+                    answers={answers} selectAnswer={selectAnswer} correct={props.answerCorrect} />
             {results}
             </div>
             {particleEffect}
@@ -206,7 +206,7 @@ function Question(props) {
                 </CSSTransitionGroup>
             </div>
             <Choices result={props.results} answered={props.answered} answerArray={props.answerArray} playerAnswer={props.playerAnswer}
-                answers={props.answers} selectAnswer={props.selectAnswer} />
+                answers={props.answers} selectAnswer={props.selectAnswer} correct={props.correct} />
         </div>
         );
 }
@@ -230,9 +230,12 @@ function Choices(props) {
 
             if (props.answerArray[i] == props.result.correct_answer) {
                 className += " right-answer ";
+                if (props.correct) {
+                    className += " player-answer "
+                }
             }
             else if (props.answerArray[i] == props.playerAnswer) {
-                className += " wrong-answer ";
+                className += " wrong-answer player-answer ";
             }
 
             if (props.result.type == "boolean") { className += " boolean "; }
@@ -382,10 +385,20 @@ function GameScreen(props) {
 }
 
 //helper function to remove html special entities and replace them with corresponding character
-function cleanString(string) {
-    return string.replace(/&quot;/g, '\"').replace(/&#039;/g, '\'').replace(/&amp;/g, '\&').replace(/&Uuml;/g, '\Ü').replace(/&deg;/g, '\°').replace(/&ouml;/g, '\ö').replace(/&rsquo;/g, '\'')
+function cleanString(str) {
+    if (str && typeof str === 'string') {
+        // strip script/html tags
+        let element = document.createElement('div');
+        str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+        str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+        element.innerHTML = str;
+        str = element.textContent;
+        element.textContent = '';
+    }
+    return str;
+    /*string.replace(/&quot;/g, '\"').replace(/&#039;/g, '\'').replace(/&amp;/g, '\&').replace(/&Uuml;/g, '\Ü').replace(/&deg;/g, '\°').replace(/&ouml;/g, '\ö').replace(/&rsquo;/g, '\'')
         .replace(/&minus;/g, '\-').replace(/&iacute;/g, '\í').replace(/&oacute;/g, '\ó').replace(/&rdquo;/g, '\"').replace(/&ldquo;/g, '\"').replace(/&lt;/g, '\<').replace(/&lt;/g, '\>')
-        .replace(/&ne;/g, '\≠').replace(/&le;/g, '\≤').replace(/&le;/g, '\≥').replace(/&uuml;/g, '\ü').replace(/&eacute;/g, '\é').replace(/&aacute;/g, '\á').replace(/&ntilde;/g, '\ñ');
+        .replace(/&ne;/g, '\≠').replace(/&le;/g, '\≤').replace(/&le;/g, '\≥').replace(/&uuml;/g, '\ü').replace(/&eacute;/g, '\é').replace(/&aacute;/g, '\á').replace(/&ntilde;/g, '\ñ').replace(/&aring;/g, '\å');*/
 }
 
 //Function to return firework particle effect

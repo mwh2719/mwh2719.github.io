@@ -76,23 +76,30 @@ hr {
 }
 
 @keyframes bounce {
-    from, 20%, 53%, 80%, to {
+    from, 20%{
         animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-        transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0) scaleY(115%);
+    }
+    53%, 80% {
+        transform: translate3d(0, 0, 0) scaleY(75%);
     }
 
     40%, 43% {
         animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
-        transform: translate3d(0, -30px, 0);
+        transform: translate3d(0, -50px, 0);
     }
 
     70% {
         animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
-        transform: translate3d(0, -15px, 0);
+        transform: translate3d(0, -25px, 0);
     }
 
     90% {
-        transform: translate3d(0, -4px, 0);
+        transform: translate3d(0, -8px, 0);
+    }
+    to {
+        animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+        transform: translate3d(0, 0, 0) scaleY(100%);
     }
 }
 
@@ -312,17 +319,62 @@ input[type=number] {
     margin: 10px 5% 10px 5%;
 }
 
+@keyframes haloMove{
+    from {
+        box-shadow: -0px -15px 10px 5px #0ff;
+    }
+    25% {
+        box-shadow: -15px 0px 15px 10px #0ff;
+    }
+    50% {
+        box-shadow: 0px 15px 20px 15px #0ff;
+    }
+    75% {
+        box-shadow: 15px 0px 15px 10px #0ff;
+    }
+    to {
+        box-shadow: 0px -15px 10px 5px #0ff;
+    }
+}
+.haloMove{
+    animation-iteration-count:infinite;
+    animation-name: haloMove;
+    transform-origin: center bottom;
+}
+#answers button:not([disabled]):hover {
+    animation: haloMove linear 3s;
+    animation-iteration-count: infinite;
+}
+#answers button:active {
+    transition: ease-in-out .25s all;
+    transform: scale(110%);
+    box-shadow: 0px 0px 40px 20px #0ff;
+}
+
+.player-answer.right-answer {
+    transform: scale(110%);
+    box-shadow: 0px 0px 40px 20px #0ff;
+}
+
+.player-answer.wrong-answer {
+    transform: scale(110%);
+    box-shadow: 0px 0px 40px 20px #0ff;
+}
+
 
 .right-answer {
     color: black;
     background-color: #18A835;
     box-shadow: 2px 2px 1px #0F6B21;
+    animation: bounce 1s;
 }
 
 .wrong-answer {
     background-color: #E52809;
     box-shadow: 2px 2px 1px #5E1004;
 }
+
+
 
 #score {
     font-size: 120px;
