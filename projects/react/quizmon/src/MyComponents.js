@@ -1,4 +1,4 @@
-﻿import React, { useEffect } from 'react'
+﻿import React, { useEffect,  } from 'react'
 import { CSSTransitionGroup } from 'react-transition-group'
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 import Particles from "react-tsparticles";
@@ -218,63 +218,69 @@ function Choices(props) {
     if (props.answered) {
         disabled = true;
     }
-    let className = "";
+    let className;
+    let timerDelay;
 
     
 
         //Checking if the question if there is a question order saved
     if (props.answerArray.length > 0) {
         for (let i = 0; i < props.answerArray.length; i++) {
-
-            className = "";
-
+            className ="answer "
 
             if (props.answerArray[i] == props.result.correct_answer) {
-                className = "right-answer ";
+                className += " right-answer ";
             }
             else if (props.answerArray[i] == props.playerAnswer) {
-                className = "wrong-answer ";
+                className += " wrong-answer ";
             }
 
-            if (props.result.type == "boolean") { className += "boolean "; }
-            else { className += "mult-choice "; }
+            if (props.result.type == "boolean") { className += " boolean "; }
+            else { className += " mult-choice "; }
 
             choices.push(<button value={props.answerArray[i]} key={i} className={className} disabled={disabled} >{cleanString(props.answerArray[i])}</button>);
         }
     }
     else {
+        className = "answer active "
 
         if (props.result.type == "boolean") {
-            console.log(props.result);
-            className += "boolean ";
-            choices.push(<button value="True" className={className} disabled={disabled} onClick={props.selectAnswer}>True</button>);
-            choices.push(<button value="False" className={className} disabled={disabled} onClick={props.selectAnswer}>False</button>);
+            timerDelay = 0;
+            className += " boolean ";
+            choices.push(<Answer answer={"True"} selectAnswer={props.selectAnswer} className={props.className} disabled={props.disabled} timerDelay={timerDelay} />);
+            timerDelay += 1;
+            choices.push(<Answer answer={"False"} selectAnswer={props.selectAnswer} className={props.className} disabled={props.disabled} timerDelay={timerDelay} />);
         }
         else {
-            className += "mult-choice ";
+            className += " mult-choice ";
+            timerDelay = 0;
             for (let i = 0; i < props.answers.length; i++) {
-                choices.push(<button value={props.answers[i]} key={i} onClick={props.selectAnswer} className={className} disabled={disabled} >{cleanString(props.answers[i])}</button>);
+                choices.push(<Answer answer={props.answers[i]} selectAnswer={props.selectAnswer} className={className} disabled={props.disabled} timerDelay={timerDelay} />);
+                timerDelay += 1;
             }
         }
 
         
     }
-    
 
-
-    
-    
 
     return <div id="answers">
-        <CSSTransitionGroup
-            transitionName="choice-growing"
-            transitionAppear={true}
-            transitionAppearTimeout={1000}
-            transitionEnter={false}
-            transitionLeave={false}>
-            {choices}
-        </CSSTransitionGroup>
-    </div>;
+                    {choices}
+            </div>;
+}
+
+function Answer(props) {
+    useEffect(() => {
+        setTimeout(() => {
+            let temp = document.getElementById("answers").children[props.timerDelay];
+
+            console.log("call");
+            temp.className += " grow-anim";
+        }, props.timerDelay * 500)
+    });
+
+
+    return <button value={props.answer} onClick={props.selectAnswer} className={props.className} disabled={props.disabled}>{cleanString(props.answer)}</button>
 }
 
 function Results(props) {
@@ -379,7 +385,7 @@ function GameScreen(props) {
 function cleanString(string) {
     return string.replace(/&quot;/g, '\"').replace(/&#039;/g, '\'').replace(/&amp;/g, '\&').replace(/&Uuml;/g, '\Ü').replace(/&deg;/g, '\°').replace(/&ouml;/g, '\ö').replace(/&rsquo;/g, '\'')
         .replace(/&minus;/g, '\-').replace(/&iacute;/g, '\í').replace(/&oacute;/g, '\ó').replace(/&rdquo;/g, '\"').replace(/&ldquo;/g, '\"').replace(/&lt;/g, '\<').replace(/&lt;/g, '\>')
-        .replace(/&ne;/g, '\≠').replace(/&le;/g, '\≤').replace(/&le;/g, '\≥').replace(/&uuml;/g, '\ü').replace(/&eacute;/g, '\é').replace(/&aacute;/g, '\á');
+        .replace(/&ne;/g, '\≠').replace(/&le;/g, '\≤').replace(/&le;/g, '\≥').replace(/&uuml;/g, '\ü').replace(/&eacute;/g, '\é').replace(/&aacute;/g, '\á').replace(/&ntilde;/g, '\ñ');
 }
 
 //Function to return firework particle effect

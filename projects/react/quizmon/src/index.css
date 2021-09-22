@@ -9,6 +9,7 @@ body {
     text-align: center;
     line-height: 2.5em;
     position: relative;
+    overflow-x:hidden;
 }
 
 button {
@@ -67,20 +68,92 @@ hr {
     padding-top: 2%;
 }
 
+
 #app-title {
     font-size: 80px;
     color: #097FDB;
+    transition-delay: 2000ms;
 }
 
+@keyframes bounce {
+    from, 20%, 53%, 80%, to {
+        animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+        transform: translate3d(0, 0, 0);
+    }
+
+    40%, 43% {
+        animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+        transform: translate3d(0, -30px, 0);
+    }
+
+    70% {
+        animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+        transform: translate3d(0, -15px, 0);
+    }
+
+    90% {
+        transform: translate3d(0, -4px, 0);
+    }
+}
+
+.bounce {
+    animation-name: bounce;
+    transform-origin: center bottom;
+}
+
+@keyframes spin{
+    from {
+        transform: translate(-100%,0);
+        transform: scale(100%,100%)
+    }
+
+    40% {
+        transform: translate(-20%,0);
+        transform: scale(150%,100%);
+    }
+
+    25% {
+        transform: translate(-5%,0);
+        transform: scale(-90%,100%);
+    }
+
+    to {
+        transform: translate(0,0);
+        transform: scale(100%,100%);
+    }
+}
+.spin {
+    animation-name: spin;
+    transform-origin: center bottom;
+}
+
+@keyframes slideInLeft{
+    from {
+        transform: translateX(-100%) skewX(50deg);
+    }
+    60% {
+        transform: translateX(25%) skewX(-30deg);
+    }
+    to {
+        transform: translateX(0) skewX(0);
+    }
+}
+
+.slideInLeft{
+    animation-name:slideInLeft;
+    transform-origin:center bottom;
+}
+
+
+
 .welcome-title-appear{
-    transform: translateX(-50%);
-    opacity: 0.01;
+    opacity: 0;
 }
 
 .welcome-title-appear.welcome-title-appear-active{
-    transform: translateX(0%);
     opacity: 1;
-    transition: 2s ease-out;
+    transition: all 2s ease-out;
+    animation:  spin 2s;
 }
 
 #welcome-div{
@@ -180,6 +253,10 @@ input[type=number] {
     text-align: center;
 }
 
+#question-info{
+    animation: slideInLeft 1s;
+}
+
 .question-anim-appear{
     opacity: .1;
 }
@@ -188,22 +265,39 @@ input[type=number] {
     transition: .5s ease-in-out opacity;
 }
 
-
-.choice-growing-appear {
-    transform: scale3d( .1, .1, .1);
+@keyframes grow{
+    from{
+        transform: scale(5%, 5%);
+    }
+    to{
+        transform: scale(100%, 100%);
+    }
 }
 
-.choice-growing-appear.choice-growing-appear-active {
-    transform: scale3d(1,1,1);
-    transition: 1s linear;
+.grow{
+    animation-name: grow;
+    transform-origin: center bottom;
 }
+
+
 
 
 #answers {
     width: 75%;
     margin-left: auto;
     margin-right: auto;
-    
+}
+.answer{
+    opacity: 1;
+}
+
+.answer.active{
+    opacity: 0;
+}
+
+.answer.active.grow-anim {
+    opacity: 1;
+    animation: grow 1s;
 }
 
 #answers button {
