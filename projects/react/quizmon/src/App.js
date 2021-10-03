@@ -24,14 +24,19 @@ class App extends React.Component{
         this.saveAnswerOrder = this.saveAnswerOrder.bind(this);
         this.loaded = this.loaded.bind(this);
 
+
+        this.audioSlide = new Audio("enter.wav");
+        this.audioLobby = new Audio("loop.mp3");
+
+        this.buttonClickAudio = new Audio("click.wav");
+
+
+        this.audioLoadedCount = 0;
+
         
     }
 
-    audioSlide = new Audio("enter.wav");
-    audioLobby = new Audio("loop.mp3");
     
-
-    audioLoadedCount = 0;
 
     loaded() {
         this.audioLoadedCount++;
@@ -43,7 +48,7 @@ class App extends React.Component{
 
     //function to retrieve the trivia questions from the JSON API
     apiCall(e) {
-
+        this.buttonClickAudio.play();
         //preventing the submit buttons default behavior
         e.preventDefault();
 
@@ -116,6 +121,7 @@ class App extends React.Component{
 
     //Method to save question info to array for later usage
     saveResult(correct, questionInfo) {
+        this.buttonClickAudio.play();
         questionInfo["questionNumber"] = this.state.questionNumber;
         if (correct) {
             this.setState(state => {
@@ -137,6 +143,7 @@ class App extends React.Component{
 
     //Method that changes the game state to the end sreen
     transferToEnd() {
+        this.buttonClickAudio.play();
         this.setState({ gameState: "end", questionNumber: 1, playerAnswer: null})
     }
 
@@ -147,6 +154,7 @@ class App extends React.Component{
 
     //Method that changes the game state to the start menu
     transferToStartMenu() {
+        this.buttonClickAudio.play();
         this.setState({ gameState: "start", results: null, correct: [], wrong: [], answerArray: [], playerAnswer: null, check: false, answerCorrect: false })
     }
 

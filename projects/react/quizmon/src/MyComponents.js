@@ -12,7 +12,7 @@ function Loading(props) {
     });
 
     return (
-        <div>
+        <div id="loading">
 
         </div>
         );
@@ -250,15 +250,15 @@ function Choices(props) {
         if (props.result.type == "boolean") {
             timerDelay = 0;
             className += " boolean ";
-            choices.push(<Answer answer={"True"} selectAnswer={props.selectAnswer} className={className} disabled={props.disabled} timerDelay={timerDelay} />);
+            choices.push(<Answer answer={"True"} selectAnswer={props.selectAnswer} className={className} disabled={props.disabled} timerDelay={timerDelay} key="trueButton"/>);
             timerDelay += 1;
-            choices.push(<Answer answer={"False"} selectAnswer={props.selectAnswer} className={className} disabled={props.disabled} timerDelay={timerDelay} />);
+            choices.push(<Answer answer={"False"} selectAnswer={props.selectAnswer} className={className} disabled={props.disabled} timerDelay={timerDelay} key="falseButton"/>);
         }
         else {
             className += " mult-choice ";
             timerDelay = 0;
             for (let i = 0; i < props.answers.length; i++) {
-                choices.push(<Answer answer={props.answers[i]} selectAnswer={props.selectAnswer} className={className} disabled={props.disabled} timerDelay={timerDelay} />);
+                choices.push(<Answer answer={props.answers[i]} selectAnswer={props.selectAnswer} className={className} disabled={props.disabled} timerDelay={timerDelay} key={"answer" + i + "Button"} />);
                 timerDelay += 1;
             }
         }
@@ -338,9 +338,14 @@ function GameOver(props) {
 
     return (
         <div>
-            <div className="content">
+            <audio autoPlay={true} loop={false}>
+                <source src="drumroll.wav"/>
+            </audio>
+            <div className="content results">
+                <div id="score-cont">
                 {response}
-                <h1 id="score">{percentCorrect}%</h1>
+                    <h1 id="score">{percentCorrect}%</h1>
+                </div>
                 <h3>Correct Answers: {props.correct.length}</h3>
                 <h3>Incorrect Answers: {props.wrong.length}</h3>
                 <button onClick={props.transfer} className="menu button" id="menu-return-button">Return to menu</button>
@@ -377,7 +382,7 @@ function GameScreen(props) {
                 saveResult={props.saveResult} saveAnswerOrder={props.saveAnswerOrder} answerArray={props.answerArray} answerCorrect={props.answerCorrect} transferToStartMenu={props.transferToStartMenu} />;
             break;
         case "end":
-            return <GameOver correct={props.correct} wrong={props.wrong} transfer={props.transferToStartMenu} />;
+            return <GameOver correct={props.correct} wrong={props.wrong} transfer={props.transferToStartMenu}/>;
             break;
         case "stats":
 

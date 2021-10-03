@@ -3,7 +3,6 @@
 }
 body {
     background-color: #097FDB;
-    
 }
 #app {
     text-align: center;
@@ -379,11 +378,51 @@ input[type=number] {
     box-shadow: 2px 2px 1px #5E1004;
 }
 
+@keyframes spotlight {
+    from {
+        clip-path: circle(0% at 0% 100%);
+    }
+    20% {
+        clip-path: circle(20% at -10% 25%);
+    }
+    40% {
+        clip-path: circle(20% at 70% 90%);
+    }
+    60% {
+        clip-path: circle(20% at 85% -20%);
+    }
+    80% {
+        clip-path: circle(20% at 20% 90%);
+    }
+    90% {
+        clip-path: circle(20% at 50% 50%);
+    }
+    to {
+        clip-path: circle(100% at 50% 50%);
+    }
+}
+
+.spotlight {
+    animation-name: spotlight;
+}
+
+.content.results{
+    animation: spotlight 3s;
+}
+
+#score-cont{
+    height: auto;
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 
 #score {
     font-size: 120px;
+    line-height: 100px;
     color: #097FDB;
+    height: auto;
 }
 #end-response{
     font-size: 40px;
