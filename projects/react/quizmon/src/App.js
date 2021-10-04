@@ -108,7 +108,6 @@ class App extends React.Component{
         //returning false if the results aare null
         if (!results || results.length <= 0) { return false; }
 
-
         //returning false if the wrong number of questions are returned
         if (results.length != amount) {
             return false;
@@ -205,7 +204,7 @@ class App extends React.Component{
     //Method that changes the game state to the start menu
     transferToStartMenu() {
         this.buttonClickAudio.play();
-        this.setState({ gameState: "start", results: null, correct: [], wrong: [], answerArray: [], playerAnswer: null, check: false, answerCorrect: false })
+        this.setState({ gameState: "start", results: null, correct: [], wrong: [], answerArray: [], playerAnswer: null, check: false, answerCorrect: false, questionNumber: 1 })
     }
 
 

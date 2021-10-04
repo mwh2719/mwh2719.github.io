@@ -202,7 +202,7 @@ function Question(props) {
                     transitionEnter={false}
                     transitionLeave={false}>
                     <h1>{props.results.category}</h1>
-                    <h3>Difficulty: {props.results.difficulty}</h3>
+                    <h3>Difficulty: {capitalizFirstLetter(props.results.difficulty)}</h3>
                     <h2>{props.number}. {question}</h2>
                 </CSSTransitionGroup>
             </div>
@@ -380,11 +380,14 @@ function Graph(props) {
     //Checking that there are correct answers
     if (props.correct.length) {
 
+        let correctArray = correctBoolType(props.correct);
+        let wrongArray = correctBoolType(props.wrong);
+
 
         //Saving number of correct by category
         let catDict = {};
         let catNameArray = [];
-        props.correct.forEach(question => {
+        correctArray.forEach(question => {
             if (catDict[question.category]) {
                 catDict[question.category]++;
             }
@@ -397,7 +400,7 @@ function Graph(props) {
         //Saving number of correct by difficulty 
         let diffDict = {};
         let diffNameArray = [];
-        props.correct.forEach(question => {
+        correctArray.forEach(question => {
             if (diffDict[question.difficulty]) {
                 diffDict[question.difficulty]++;
             }
@@ -410,7 +413,7 @@ function Graph(props) {
         //Saving number of correct by type
         let typeDict = {};
         let typeNameArray = [];
-        props.correct.forEach(question => {
+        correctArray.forEach(question => {
             if (typeDict[question.type]) {
                 typeDict[question.type]++;
             }
@@ -428,7 +431,7 @@ function Graph(props) {
 
         if (props.statsBasedOn == "best") {
             const data = {
-                labels: [catNameArray[0], diffNameArray[0], typeNameArray[0]],
+                labels: [capitalizFirstLetter(catNameArray[0]), capitalizFirstLetter(diffNameArray[0]), capitalizFirstLetter(typeNameArray[0])],
                 datasets: [
                     {
                         label: 'Number Correct',
@@ -453,11 +456,11 @@ function Graph(props) {
             let wrongCat = [];
 
             for (let i = 0; i < catNameArray.length; i++) {
-                labels.push(catNameArray[i]);
+                labels.push(capitalizFirstLetter(catNameArray[i]));
                 dataPoints.push(catDict[catNameArray[i]]);
             }
-            for (let i = 0; i < props.wrong.length; i++) {
-                wrongCat.push(props.wrong[i].category);
+            for (let i = 0; i < wrongArray.length; i++) {
+                wrongCat.push(capitalizFirstLetter(wrongArray[i].category));
             }
 
             let uniqueWrongCat = [...new Set(wrongCat)];
@@ -495,11 +498,11 @@ function Graph(props) {
             let wrongDiff = [];
 
             for (let i = 0; i < diffNameArray.length; i++) {
-                labels.push(diffNameArray[i]);
+                labels.push(capitalizFirstLetter(diffNameArray[i]));
                 dataPoints.push(diffDict[diffNameArray[i]]);
             }
-            for (let i = 0; i < props.wrong.length; i++) {
-                wrongDiff.push(props.wrong[i].difficulty);
+            for (let i = 0; i < wrongArray.length; i++) {
+                wrongDiff.push(capitalizFirstLetter(wrongArray[i].difficulty));
             }
 
             let uniqueWrongDiff = [...new Set(wrongDiff)];
@@ -537,11 +540,11 @@ function Graph(props) {
             let wrongType = [];
 
             for (let i = 0; i < typeNameArray.length; i++) {
-                labels.push(typeNameArray[i]);
+                labels.push(capitalizFirstLetter(typeNameArray[i]));
                 dataPoints.push(typeDict[typeNameArray[i]]);
             }
-            for (let i = 0; i < props.wrong.length; i++) {
-                wrongType.push(props.wrong[i].type);
+            for (let i = 0; i < wrongArray.length; i++) {
+                wrongType.push(capitalizFirstLetter(wrongArray[i].type));
             }
 
             let uniqueWrongType = [...new Set(wrongType)];
@@ -582,15 +585,11 @@ function Graph(props) {
         );
 }
 
-//helper function to return labels
-function GetLabel() {
+//helper function to return labels and data
+function GetLabelAndData() {
 
 }
 
-//helper function to return data
-function GetData() {
-
-}
 
 
 //component that will display the game based on its current state
@@ -636,6 +635,19 @@ function cleanString(str) {
     /*string.replace(/&quot;/g, '\"').replace(/&#039;/g, '\'').replace(/&amp;/g, '\&').replace(/&Uuml;/g, '\Ü').replace(/&deg;/g, '\°').replace(/&ouml;/g, '\ö').replace(/&rsquo;/g, '\'')
         .replace(/&minus;/g, '\-').replace(/&iacute;/g, '\í').replace(/&oacute;/g, '\ó').replace(/&rdquo;/g, '\"').replace(/&ldquo;/g, '\"').replace(/&lt;/g, '\<').replace(/&lt;/g, '\>')
         .replace(/&ne;/g, '\≠').replace(/&le;/g, '\≤').replace(/&le;/g, '\≥').replace(/&uuml;/g, '\ü').replace(/&eacute;/g, '\é').replace(/&aacute;/g, '\á').replace(/&ntilde;/g, '\ñ').replace(/&aring;/g, '\å');*/
+}
+
+//helper function to captilize first letter of word
+function capitalizFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+//helper funnction that changes the type label from boolean to true/false
+function correctBoolType(results) {
+    for (let i = 0; i < results.length; i++) {
+        if (results[i].type == "boolean") { results[i].type = "True / False"; }
+    }
+    return results;
 }
 
 //Function to return firework particle effect
