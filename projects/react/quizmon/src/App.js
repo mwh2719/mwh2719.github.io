@@ -12,7 +12,7 @@ class App extends React.Component{
         super(props);
 
         //setting the game state of the app to start when the app is constructed
-        this.state = { gameState: "loading", results: null, questionNumber: 1, playerAnswer: null, correct: [], wrong: [], check: false, answerArray: [], answerCorrect: false };
+        this.state = { gameState: "loading", results: null, questionNumber: 1, playerAnswer: null, correct: [], wrong: [], check: false, answerArray: [], answerCorrect: false, statsBasedOn: "best" };
 
         this.apiCall = this.apiCall.bind(this);
         this.increment = this.increment.bind(this);
@@ -23,6 +23,8 @@ class App extends React.Component{
         this.saveResult = this.saveResult.bind(this);
         this.saveAnswerOrder = this.saveAnswerOrder.bind(this);
         this.loaded = this.loaded.bind(this);
+        this.checkResults = this.checkResults.bind(this);
+        this.updateStatGraph = this.updateStatGraph.bind(this);
 
 
         this.audioSlide = new Audio("enter.wav");
@@ -50,28 +52,32 @@ class App extends React.Component{
     apiCall(e) {
         this.buttonClickAudio.play();
         //preventing the submit buttons default behavior
-        e.preventDefault();
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
 
         //saving the base url
         let url = 'https://opentdb.com/api.php?';
 
+        let formData = (e.target) ? e.target : e;
+
         //adding the amount of questions to the url
-        url += "amount=" + e.target.amount.value;
+        url += "amount=" + formData.amount.value;
 
         //adding to url based on user input
-        if (e.target.category.value != "any")
+        if (formData.category.value != "any")
         {
-            url += "&category=" + e.target.category.value;
+            url += "&category=" + formData.category.value;
         }
 
-        if (e.target.difficulty.value != "any")
+        if (formData.difficulty.value != "any")
         {
-            url += "&difficulty=" + e.target.difficulty.value;
+            url += "&difficulty=" + formData.difficulty.value;
         }
 
-        if (e.target.type.value != "any")
+        if (formData.type.value != "any")
         {
-            url += "&type=" + e.target.type.value;
+            url += "&type=" + formData.type.value;
         }
 
         //variable to hold the api call results
@@ -83,8 +89,12 @@ class App extends React.Component{
                 .then(response => response.json())
                 .then(data => results = data)
                 .then(() => {
-                    if (results.response_code) { alert("Could not retrieve questions. Please try again"); return; };
-                    this.setState({ gameState: "game", results: results.results });
+                    if (results.response_code) { alert("Could not retrieve questions with those inputs. Please adjust your inputs and try again"); return; };
+                    //Calling method to check if the results are correct
+                    if (this.checkResults(results.results, formData.amount.value, formData.category.value, formData.difficulty.value, formData.type.value))
+                    { this.setState({ gameState: "game", results: results.results }); }
+                    //If they are incorrect, calling the API database again
+                    else {  this.apiCall(document.getElementById("question-options-form")); return; }
                 });
         }
         catch (error) {
@@ -93,6 +103,41 @@ class App extends React.Component{
 
     }
 
+    //Method that checks the results against the user input to make sure it matches
+    checkResults(results, amount, category, difficulty, type) {
+        //returning false if the results aare null
+        if (!results || results.length <= 0) { return false; }
+
+
+        //returning false if the wrong number of questions are returned
+        if (results.length != amount) {
+            return false;
+        }
+
+        //looping through the results and retruening false if any of the properties dont match the user input
+        for (let i = 0; i < results.length; i++)
+        {
+            if (category !== "any") {
+                if (results[i].category !== category) {
+                    return false;
+                }
+            }
+            if (difficulty !== "any") {
+                if (results[i].difficulty !== difficulty) {
+                    return false;
+                }
+            }
+            if (type !== "any") {
+                if (results[i].type !== type) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
+    //Method that saves the shuffled order of the answers as a state
     saveAnswerOrder(array) {
         this.setState({ answerArray: array });
     }
@@ -149,7 +194,12 @@ class App extends React.Component{
 
     //Method that changes game state to the stat screen
     transferToStat() {
-        this.setState({ gameState:"stats" })
+        this.buttonClickAudio.play();
+        this.setState({ gameState: "stats", statsBasedOn: "best" })
+    }
+
+    updateStatGraph(e) {
+        this.setState({ statsBasedOn: e.target.value });
     }
 
     //Method that changes the game state to the start menu
@@ -165,7 +215,8 @@ class App extends React.Component{
                 <GameScreen currentState={this.state.gameState} database={this.apiCall} results={this.state.results} questionNumber={this.state.questionNumber}
                     incrementQuestion={this.increment} playerAnswer={this.state.playerAnswer} checkAnswer={this.checkAnswer} transferToEnd={this.transferToEnd} transferToStat={this.transferToStat}
                     transferToStartMenu={this.transferToStartMenu} saveResult={this.saveResult} correct={this.state.correct} wrong={this.state.wrong} check={this.state.check}
-                    saveAnswerOrder={this.saveAnswerOrder} answerArray={this.state.answerArray} answerCorrect={this.state.answerCorrect} audioSlide={this.audioSlide} audioLobby={this.audioLobby} loaded={this.loaded} />
+                    saveAnswerOrder={this.saveAnswerOrder} answerArray={this.state.answerArray} answerCorrect={this.state.answerCorrect} audioSlide={this.audioSlide} audioLobby={this.audioLobby} loaded={this.loaded}
+                    updateStatGraph={this.updateStatGraph} statsBasedOn={this.state.statsBasedOn} />
             </div>
         );
     }

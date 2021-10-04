@@ -2,6 +2,7 @@
 import { CSSTransitionGroup } from 'react-transition-group'
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 import Particles from "react-tsparticles";
+import { Bar, Radar, Pie } from 'react-chartjs-2';
 
 function Loading(props) {
 
@@ -45,7 +46,7 @@ function Welcome(props) {
                 transitionLeave={false}>
                 <div id="input-div">
                     <hr />
-                    <form onSubmit={props.database}>
+                    <form onSubmit={props.database} id="question-options-form">
                         <div id="input-fields">
                             <label htmlFor="amount">Number of Questions: </label>
                             <input type="number" id="amount" name="amount" min="1" max="50" defaultValue="10"/><br />
@@ -172,7 +173,7 @@ function PlayGame(props) {
     return (
         <div>
             <div className="content">
-                <button className="menu button" id="escape" onClick={props.transferToStartMenu}>&#x2716;</button>
+                <button className="menu button escape" id="leave-game" onClick={props.transferToStartMenu}>&#x2716;</button>
             {timer}
                 <Question results={props.results[props.questionNumber - 1]} number={props.questionNumber} answered={props.check} answerArray={props.answerArray} playerAnswer={props.playerAnswer}
                     answers={answers} selectAnswer={selectAnswer} correct={props.answerCorrect} />
@@ -226,7 +227,7 @@ function Choices(props) {
         //Checking if the question if there is a question order saved
     if (props.answerArray.length > 0) {
         for (let i = 0; i < props.answerArray.length; i++) {
-            className ="answer "
+            className ="answer button "
 
             if (props.answerArray[i] == props.result.correct_answer) {
                 className += " right-answer ";
@@ -245,7 +246,7 @@ function Choices(props) {
         }
     }
     else {
-        className = "answer active "
+        className = "answer active button "
 
         if (props.result.type == "boolean") {
             timerDelay = 0;
@@ -348,6 +349,7 @@ function GameOver(props) {
                 </div>
                 <h3>Correct Answers: {props.correct.length}</h3>
                 <h3>Incorrect Answers: {props.wrong.length}</h3>
+                <button onClick={props.transferToStat} className="menu button">Stats</button>
                 <button onClick={props.transfer} className="menu button" id="menu-return-button">Return to menu</button>
             </div>
             {audio}
@@ -358,10 +360,236 @@ function GameOver(props) {
 
 //component that will display the users stats and handle logic for computing them
 function Stats(props) {
+    return (
+        <div className="content">
+            <button className="menu button escape" id="back-to-menu" onClick={props.transferToStartMenu}>Menu</button>
+            <label htmlFor="stat-select">Show: </label>
+            <select id="stat-select" name="stat-select" onChange={props.updateStatGraph} >
+                <option value="best">Best</option>
+                <option value="by-category">By Category</option>
+                <option value="by-difficulty">By Difficulty</option>
+                <option value="by-type">By Type</option>
+            </select><br />
+            <Graph {...props}/>
+        </div>
+        );
+}
 
+function Graph(props) {
+
+    //Checking that there are correct answers
+    if (props.correct.length) {
+
+
+        //Saving number of correct by category
+        let catDict = {};
+        let catNameArray = [];
+        props.correct.forEach(question => {
+            if (catDict[question.category]) {
+                catDict[question.category]++;
+            }
+            else {
+                catDict[question.category] = 1;
+                catNameArray.push(question.category);
+            }
+        });
+
+        //Saving number of correct by difficulty 
+        let diffDict = {};
+        let diffNameArray = [];
+        props.correct.forEach(question => {
+            if (diffDict[question.difficulty]) {
+                diffDict[question.difficulty]++;
+            }
+            else {
+                diffDict[question.difficulty] = 1;
+                diffNameArray.push(question.difficulty);
+            }
+        });
+
+        //Saving number of correct by type
+        let typeDict = {};
+        let typeNameArray = [];
+        props.correct.forEach(question => {
+            if (typeDict[question.type]) {
+                typeDict[question.type]++;
+            }
+            else {
+                typeDict[question.type] = 1;
+                typeNameArray.push(question.type);
+            }
+        });
+
+
+        //Sorting the arrays in descending order based on number correct
+        catNameArray.sort((a, b) => { return catDict[b] - catDict[a] });
+        diffNameArray.sort((a, b) => { return diffDict[b] - diffDict[a] });
+        typeNameArray.sort((a, b) => { return typeDict[b] - typeDict[a] });
+
+        if (props.statsBasedOn == "best") {
+            const data = {
+                labels: [catNameArray[0], diffNameArray[0], typeNameArray[0]],
+                datasets: [
+                    {
+                        label: 'Number Correct',
+                        data: [catDict[catNameArray[0]], diffDict[diffNameArray[0]], typeDict[typeNameArray[0]]],
+                        backgroundColor: 'rgba(9, 127, 219, 0.4)',
+                        borderColor: 'rgba(6, 86, 148, 1)',
+                        borderWidth: 1,
+                    }
+                ]
+            }
+            const options = {
+                scale: {
+                    min: 0,
+                    ticks: { beginAtZero: true },
+                }
+            }
+            return <Radar data={data} options={options} className="graph" />;
+        }
+        else if (props.statsBasedOn == "by-category") {
+            let labels = [];
+            let dataPoints = [];
+            let wrongCat = [];
+
+            for (let i = 0; i < catNameArray.length; i++) {
+                labels.push(catNameArray[i]);
+                dataPoints.push(catDict[catNameArray[i]]);
+            }
+            for (let i = 0; i < props.wrong.length; i++) {
+                wrongCat.push(props.wrong[i].category);
+            }
+
+            let uniqueWrongCat = [...new Set(wrongCat)];
+            let allLabels = labels.concat(uniqueWrongCat);
+            labels = [...new Set(allLabels)];
+            for (let i = 0; i < labels.length; i++) {
+                if (!dataPoints[i]) {
+                    dataPoints[i] = 0;
+                }
+            }
+
+
+            const data = {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Number Correct',
+                        data: dataPoints,
+                        backgroundColor: 'rgba(9, 127, 219, 1)',
+                        borderColor: 'rgba(6, 86, 148, 1)',
+                        borderWidth: 1,
+                    }
+                ]
+            }
+            const options = {
+                scale: {
+                    min: 0,
+                }
+            }
+            return <Bar data={data} options={options} className="graph" />;
+        }
+        else if (props.statsBasedOn == "by-difficulty") {
+            let labels = [];
+            let dataPoints = [];
+            let wrongDiff = [];
+
+            for (let i = 0; i < diffNameArray.length; i++) {
+                labels.push(diffNameArray[i]);
+                dataPoints.push(diffDict[diffNameArray[i]]);
+            }
+            for (let i = 0; i < props.wrong.length; i++) {
+                wrongDiff.push(props.wrong[i].difficulty);
+            }
+
+            let uniqueWrongDiff = [...new Set(wrongDiff)];
+            let allLabels = labels.concat(uniqueWrongDiff);
+            labels = [...new Set(allLabels)];
+            for (let i = 0; i < labels.length; i++) {
+                if (!dataPoints[i]) {
+                    dataPoints[i] = 0;
+                }
+            }
+
+
+            const data = {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Number Correct',
+                        data: dataPoints,
+                        backgroundColor: 'rgba(9, 127, 219, 1)',
+                        borderColor: 'rgba(6, 86, 148, 1)',
+                        borderWidth: 1,
+                    }
+                ]
+            }
+            const options = {
+                scale: {
+                    min: 0,
+                }
+            }
+            return <Bar data={data} options={options} className="graph" />;
+        }
+        else if (props.statsBasedOn == "by-type") {
+            let labels = [];
+            let dataPoints = [];
+            let wrongType = [];
+
+            for (let i = 0; i < typeNameArray.length; i++) {
+                labels.push(typeNameArray[i]);
+                dataPoints.push(typeDict[typeNameArray[i]]);
+            }
+            for (let i = 0; i < props.wrong.length; i++) {
+                wrongType.push(props.wrong[i].type);
+            }
+
+            let uniqueWrongType = [...new Set(wrongType)];
+            let allLabels = labels.concat(uniqueWrongType);
+            labels = [...new Set(allLabels)];
+            for (let i = 0; i < labels.length; i++) {
+                if (!dataPoints[i]) {
+                    dataPoints[i] = 0;
+                }
+            }
+
+
+            const data = {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Number Correct',
+                        data: dataPoints,
+                        backgroundColor: 'rgba(9, 127, 219, 1)',
+                        borderColor: 'rgba(6, 86, 148, 1)',
+                        borderWidth: 1,
+                    }
+                ]
+            }
+            const options = {
+                scale: {
+                    min: 0,
+                }
+            }
+            return <Bar data={data} options={options} className="graph" />;
+        }
+    }
+    else {
+        return <h1>Sorry, no data to display. Try again</h1>
+    }
     return (
         null
         );
+}
+
+//helper function to return labels
+function GetLabel() {
+
+}
+
+//helper function to return data
+function GetData() {
+
 }
 
 
@@ -382,10 +610,10 @@ function GameScreen(props) {
                 saveResult={props.saveResult} saveAnswerOrder={props.saveAnswerOrder} answerArray={props.answerArray} answerCorrect={props.answerCorrect} transferToStartMenu={props.transferToStartMenu} />;
             break;
         case "end":
-            return <GameOver correct={props.correct} wrong={props.wrong} transfer={props.transferToStartMenu}/>;
+            return <GameOver correct={props.correct} wrong={props.wrong} transfer={props.transferToStartMenu} transferToStat={props.transferToStat} />;
             break;
         case "stats":
-
+            return <Stats correct={props.correct} wrong={props.wrong} transferToStartMenu={props.transferToStartMenu} updateStatGraph={props.updateStatGraph} statsBasedOn={props.statsBasedOn}/>
             break;
         default:
             return <h1>An error has occured</h1>;
@@ -413,7 +641,8 @@ function cleanString(str) {
 //Function to return firework particle effect
 function Fireworks(props) {
     return (
-        <Particles options={{
+        <Particles className="particles"
+            options={{
             background: {
                 color: "#075FA3",
                 opacity: 1
@@ -558,7 +787,8 @@ function Fireworks(props) {
 //Funtion to return smoke particle effect
 function Smoke(props) {
     return (
-        <Particles options={{
+        <Particles className="particles"
+            options={{
             background: {
                 color: "#075FA3",
                 opacity: 1
